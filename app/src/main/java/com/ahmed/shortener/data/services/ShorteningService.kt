@@ -7,12 +7,15 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 
 class ShorteningService : BaseService {
+    private val client = OkHttpClient()
+    private val gson = Gson()
+
     override fun shortenUrl(url: String): ApiRequestState<ShorteningUrlApiResponse> {
         var state: ApiRequestState<ShorteningUrlApiResponse>
         try {
-            val response = OkHttpClient().newCall(ApiRequestHelper.makeApiShortenLinkRequest(url)).execute()
+            val response = client.newCall(ApiRequestHelper.makeApiShortenLinkRequest(url)).execute()
             if (response.isSuccessful) {
-                Gson().fromJson(response.body?.string(), ShorteningUrlApiResponse::class.java).run {
+                gson.fromJson(response.body?.string(), ShorteningUrlApiResponse::class.java).run {
                     state = ApiRequestState.Success(this)
                 }
             } else state = ApiRequestState.Fail(response.message)

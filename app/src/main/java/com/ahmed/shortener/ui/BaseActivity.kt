@@ -6,8 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
 import androidx.viewbinding.ViewBinding
 import com.ahmed.shortener.data.services.LocaleService
+import com.ahmed.shortener.utils.Constants
+import com.ahmed.shortener.utils.Preferencer
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     abstract val logTag: String
@@ -25,8 +28,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(newBase)
         LocaleService.updateBaseContextLocale(newBase!!)
+        super.attachBaseContext(newBase)
     }
 
     abstract fun setUp()
