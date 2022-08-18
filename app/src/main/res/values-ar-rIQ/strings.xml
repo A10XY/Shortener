@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shortener</string>
+
+    <string name="app_title">مختصر الروابط</string>
+    <string name="link_edittext_hint">ادخل الرابط</string>
+    <string name="shorten">اختصر</string>
+    <string name="copy_text">نسخ</string>
+    <string name="shortened_link_placeholder">https://bit.ly</string>
+    <string name="shortened_link">الرابط المختصر:</string>
+    <string name="share">شارك</string>
+    <string name="settings">الإعدادات</string>
+    <string name="navigate_back">رجوع</string>
+    <string name="language">اللغة</string>
+    <string name="selected_language">العربية</string>
+
+    <string name="language_array_title">قائمة اللغات</string>
+    <string-array name="language_array">
+        <item>@string/lang_en</item>
+        <item>@string/lang_ar</item>
+    </string-array>
+
+    <string name="lang_en">الإنجليزية</string>
+    <string name="lang_ar">العربية</string>
+
+</resources>
