@@ -8,11 +8,13 @@ import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.ahmed.shortener.utils.Constants
+import com.ahmed.shortener.utils.Preferencer
 import java.util.*
 
 object LocaleService {
     fun updateBaseContextLocale(context: Context): Context {
         val language = getLanguageFromPreferences(context)
+        Log.d("MALT", "Language is $language")
         val locale = Locale(language)
         Locale.setDefault(locale)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) return updateResourcesLocale(context, locale)
@@ -56,7 +58,6 @@ object LocaleService {
     }
 
     private fun getLanguageFromPreferences(context: Context): String {
-        val sharedPreferences = context.getSharedPreferences(Constants.PREF_DB_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getString(Constants.PREF_TITLE_LANG, Constants.LANGUAGE_DEFAULT)!!
+        return Preferencer(context).getString(Constants.PREF_TITLE_LANG, Constants.LANGUAGE_DEFAULT)
     }
 }

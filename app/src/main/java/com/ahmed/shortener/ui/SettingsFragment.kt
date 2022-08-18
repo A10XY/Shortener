@@ -1,23 +1,22 @@
 package com.ahmed.shortener.ui
 
-import android.content.Context
-import android.util.Log
-import android.view.LayoutInflater
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.ahmed.shortener.R
 import com.ahmed.shortener.data.Language
 import com.ahmed.shortener.databinding.FragmentSettingsBinding
-import com.ahmed.shortener.databinding.LayoutLanguagesBinding
 import com.ahmed.shortener.utils.Constants
+import com.ahmed.shortener.utils.Preferencer
 import com.ahmed.shortener.utils.navigateToFragment
-import com.ahmed.shortener.utils.showShortToast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsBinding::inflate) {
     override val logTag: String = Constants.MAIN_ACTIVITY_LOG_TAG
 
+    private lateinit var preferencer: Preferencer
+
     override fun setUpOnCreateView() {
+        preferencer = Preferencer(requireContext())
         setCurrentLanguage()
     }
 
@@ -53,19 +52,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
     }
 
     private fun getCurrentLanguage(): Language {
-        val sharedPreferences = requireContext().getSharedPreferences(Constants.PREF_DB_NAME, Context.MODE_PRIVATE)
-        val language = sharedPreferences.getString(Constants.PREF_TITLE_LANG, Constants.LANGUAGE_DEFAULT)
+        val language = preferencer.getString(Constants.PREF_TITLE_LANG, Constants.LANGUAGE_DEFAULT)
         return if (language == Constants.ENGLISH_LANGUAGE_CODE) Language.ENGLISH else Language.ARABIC
     }
 
     private fun handleChangeLanguage(newLang: Language) {
-        val languageCode: String = if (newLang == Language.ENGLISH) Constants.ENGLISH_LANGUAGE_CODE
-        else Constants.ARABIC_LANGUAGE_CODE
-        requireContext().getSharedPreferences(Constants.PREF_DB_NAME, Context.MODE_PRIVATE).run {
-            with(this.edit()) {
-                putString(Constants.PREF_TITLE_LANG, languageCode)
-            }
-        }
+        val languageCode: String = if (newLang == Language.ENGLISH) Constants.ENGLISH_LANGUAGE_CODE else Constants.ARABIC_LANGUAGE_CODE
+        preferencer.putString(Constants.PREF_TITLE_LANG, languageCode)
         requireActivity().recreate()
     }
 }
